@@ -13,6 +13,10 @@ var tests = [];
         }).length === arr1.length;
     }
 
+    function isFalse (val1) {
+        return val1 === false;
+    }
+
     tests.push({
         expr: function() {
             return equals(divideIntoPools(100, [0.5, 0.5]), [50, 50]);
@@ -29,7 +33,7 @@ var tests = [];
 
     tests.push({
         expr: function() {
-            return 123.45 === [111.11, 4.94, 3.70, 2.47, 1.23].reduce(function(a,b){return a+b;});
+            return 123.45 === divideIntoPools(123.45, [0.9, 0.04, 0.03, 0.02, 0.01]).reduce(function(a,b){return a+b;});
         },
         label: 'the total of pools equals the total'
     });
@@ -67,6 +71,20 @@ var tests = [];
             return equals(divideIntoPools(0.10, [0.75, 0.25]), [0.08, 0.02]);
         },
         label: 'it assignes reminders to the first pool'
+    });
+
+    tests.push({
+        expr: function() {
+            return isFalse(divideIntoPools(0.10, [0.5, 0.25]), false);
+        },
+        label: 'it should fail when pools total to less than 100'
+    });
+
+    tests.push({
+        expr: function() {
+            return isFalse(divideIntoPools(0.10, [0.9, 0.25]), false);
+        },
+        label: 'it should fail when pool total is greater than 100'
     });
 
 })();
