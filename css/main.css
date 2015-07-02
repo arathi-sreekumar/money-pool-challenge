@@ -52,6 +52,9 @@ input {
   border: 0;
   font-size: 14px;
 }
+.btn:hover {
+  background-color: #334521;
+}
 .btn-remove {
   padding: 6px 8px;
   background-color: #000000;
@@ -60,8 +63,14 @@ input {
   border: 0;
   float: right;
 }
+.btn-remove:hover {
+  background-color: #334521;
+}
 .btn-danger {
   background-color: #a31515;
+}
+.btn-danger:hover {
+  background-color: #ff0000;
 }
 .pool-shares ul {
   max-width: 400px;
