@@ -18,78 +18,92 @@ var moneyPool = {poolShares: [], hasPools: false, totalPoolShareValue: 0, total:
             showElementById('total-money-error');
             return;
         }
+        //if valid hide error message for total field
         hideElementById('total-money-error');
+
+        //Accept only upto two decimal places for total, remove the rest and update field
         moneyPool.total = +(parseFloat(this.value).toFixed(2));
         this.value = moneyPool.total;
-        //Hiding info message on how to fill total money when value is present
+
         if (moneyPool.total > 0) {
-            hideElementById('total-money-info-msg');
-            showElementById('reset-money-pool');
+            hideElementById('total-money-info-msg'); //Hiding info message on how to fill total money when value is present
+            showElementById('reset-money-pool'); //Showing reset button once form is changed
 
             if (moneyPool.totalPoolShareValue === 100) {
-                showElementById('get-pools');
+                showElementById('get-pools'); //If both total and percentage inputs are complete and valid show 'show pools' button
             }
         }
     };
 
+    //Each pool value entry is taken as input and added to pool list
     document.getElementById('create-pool').onclick = function (e) {
         e.preventDefault();
         var poolValue = parseFloat(document.getElementById('pool-percent').value);
-        if (moneyPool.validatePoolValue(poolValue) === true) {
+
+        if (moneyPool.validatePoolValue(poolValue) === true) { //if valid pool value
+
+            //Adding pool value to money pool and updating the total
             moneyPool.poolShares.push(poolValue);
             moneyPool.poolSharePercents.push(poolValue/100);
             moneyPool.totalPoolShareValue += poolValue;
+
             //update remaining percentage display
             document.getElementById('percent-remaining').innerHTML = (100 - moneyPool.totalPoolShareValue);
 
+            //Show the pool percentage shares listing section
             document.getElementById('pool-percent').value = '';
             if (!moneyPool.hasPools) {
                 moneyPool.hasPools = true;
                 showElementByClassName('pool-shares');
-                showElementById('reset-money-pool');
+                showElementById('reset-money-pool'); //show reset button if there is an input
             }
 
+            // Add pool to listing section
             createNewPoolRow(poolValue);
 
             if (moneyPool.totalPoolShareValue === 100) {
                 document.getElementById('percentage-form').className = 'hide'; //hide percentage form
 
                 if (moneyPool.total !== 0) {
-                    showElementById('get-pools');
+                    showElementById('get-pools'); // If all valid inputs are present then show 'show pool' buton
                 } else {
-                    showElementById('total-money-info-msg');
+                    showElementById('total-money-info-msg'); //If total field is missing prompt user
                 }
             }
         }
     };
 
+    //Swap back to input view on click of this button
     document.getElementById('view-money-pool-input').onclick = function () {
         hideElementByClassName('money-pool-display');
         showElementById('money-pool-input');
     };
 
+    //When get pools button is clicked, generate pools and display the result
     document.getElementById('get-pools').onclick = function () {
         showElementByClassName('money-pool-display');
         hideElementById('money-pool-input');
         moneyPool.createMoneyPoolView();
     };
 
+    //When reset button is clicked reset the display to initial input display
     document.getElementById('reset-money-pool').onclick = function () {
         hideElementByClassName('money-pool-display');
         showElementById('money-pool-input');
         moneyPool.resetMoneyPool();
     };
 
+    //Function to reset inputs
     moneyPool.resetMoneyPool = function () {
-        document.getElementById('created-pool-shares').innerHTML = '';
-        hideElementByClassName('pool-shares');
-        hideElementById('reset-money-pool');
-        hideElementById('get-pools');
+        document.getElementById('created-pool-shares').innerHTML = ''; //Remove all pools added
+        hideElementByClassName('pool-shares'); // hide pools listing section
+        hideElementById('reset-money-pool'); // hide reset button
+        hideElementById('get-pools'); // hide get pools button
         document.getElementById('percentage-form').className = ''; //show percentage form
-        document.getElementById('total-money').value = '';
-        document.getElementById('percent-remaining').innerHTML = '100';
+        document.getElementById('total-money').value = ''; //Reset total to empty
+        document.getElementById('percent-remaining').innerHTML = '100'; //Reset total pool percent available to 100
 
-        //reset all money pool attributes
+        //reset all money pool object attributes
         moneyPool.poolShares = [];
         moneyPool.poolSharePercents = [];
         moneyPool.hasPools = false;
@@ -97,10 +111,14 @@ var moneyPool = {poolShares: [], hasPools: false, totalPoolShareValue: 0, total:
         moneyPool.total = 0;
     };
 
+    // Creating a money pool view when all inputs are valid
     moneyPool.createMoneyPoolView = function () {
+        //generate money pools using the divide into pools function
         moneyPool.poolShareValues = moneyPool.divideIntoPools(moneyPool.total, moneyPool.poolSharePercents);
         var poolViewContainer = document.getElementById('created-money-pools');
-        poolViewContainer.innerHTML = '';
+        poolViewContainer.innerHTML = ''; // Reset the pools view
+
+        //Create each pools display element and show in pool list
         for (var i = 0; i < moneyPool.poolShareValues.length; i++) {
             var newShareElement = document.createElement('LI');
             newShareElement.innerHTML = '<span class="share-money">&pound;' + moneyPool.poolShareValues[i].toFixed(2) + '</span>' +
@@ -108,9 +126,11 @@ var moneyPool = {poolShares: [], hasPools: false, totalPoolShareValue: 0, total:
                                         '<span class="share-display"><span class="bar" style="width: ' +  moneyPool.poolShares[i] + '%;"></span></span>';
             poolViewContainer.appendChild(newShareElement);
         }
+        //Show total money in the view
         document.getElementById('display-total-money').innerHTML = moneyPool.total;
     };
 
+    // Function to create a pool percentage row for each input pool percent
     function createNewPoolRow (poolValue) {
         var newShareElement = document.createElement('LI');
         newShareElement.innerHTML = '<span>Share percentage: ' + poolValue + '%</span>';
@@ -150,6 +170,7 @@ var moneyPool = {poolShares: [], hasPools: false, totalPoolShareValue: 0, total:
         document.getElementById('percent-remaining').innerHTML = (100 - moneyPool.totalPoolShareValue);
     };
 
+    //Hide an element by classname from view by adding hide class to each element with the class
     function hideElementByClassName(className) {
         var elementList = document.getElementsByClassName(className);
 
@@ -158,10 +179,12 @@ var moneyPool = {poolShares: [], hasPools: false, totalPoolShareValue: 0, total:
         });
     }
 
+    //Hide an element by Id from screen, by adding hide class
     function hideElementById(id) {
         document.getElementById(id).className = document.getElementById(id).className.replace(/\bhide\b/,'') + ' hide';
     }
 
+    // Show an element by classname by removing the hide class from each element with the class
     function showElementByClassName(className) {
         var elementList = document.getElementsByClassName(className);
 
@@ -170,10 +193,12 @@ var moneyPool = {poolShares: [], hasPools: false, totalPoolShareValue: 0, total:
         });
     }
 
+    // Show an element by id by removing the hide class
     function showElementById(id) {
         document.getElementById(id).className = document.getElementById(id).className.replace(/\bhide\b/,'');
     }
 
+    //Pool input percentage value validation function
     moneyPool.validatePoolValue = function (poolValue) {
         var errorMsg = '', isValid = true;
 
