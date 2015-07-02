@@ -4,13 +4,24 @@ var moneyPool = {poolShares: [], hasPools: false, totalPoolShareValue: 0, total:
 
 (function () {
 
+    //Prevent total money form submission to avoid page refresh
     document.getElementById('total-money-form').onsubmit = function(e) {
         e.preventDefault();
     };
 
+    //Total money is stored to moneyPool object when 'total-money' field changes value
     document.getElementById('total-money').onchange = function (e) {
         e.preventDefault();
-        moneyPool.total = this.value;
+
+        //Number validation for total money
+        if (isNaN(this.value)) {
+            showElementById('total-money-error');
+            return;
+        }
+        hideElementById('total-money-error');
+        moneyPool.total = +(parseFloat(this.value).toFixed(2));
+        this.value = moneyPool.total;
+        //Hiding info message on how to fill total money when value is present
         if (moneyPool.total > 0) {
             hideElementById('total-money-info-msg');
             showElementById('reset-money-pool');
@@ -184,7 +195,6 @@ var moneyPool = {poolShares: [], hasPools: false, totalPoolShareValue: 0, total:
 
     moneyPool.divideIntoPools = function(money, percentage) {
 
-        console.log(percentage);
         //sanity check for percentage adding up to 1
         var percentTotal = percentage.reduce(function(a, b) {
             return +(parseFloat(a + b).toFixed(2)); //this is to resolve floating point addition correctly
