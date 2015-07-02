@@ -14,7 +14,7 @@ var moneyPool = {poolShares: [], hasPools: false, totalPoolShareValue: 0, total:
         e.preventDefault();
 
         //Number validation for total money
-        if (isNaN(this.value)) {
+        if (moneyPool.validatePositiveNumber(this.value).isValid === false) {
             showElementById('total-money-error');
             return;
         }
@@ -39,7 +39,7 @@ var moneyPool = {poolShares: [], hasPools: false, totalPoolShareValue: 0, total:
     document.getElementById('create-pool').onclick = function (e) {
         e.preventDefault();
         var poolValue = parseFloat(document.getElementById('pool-percent').value);
-        var validationObject = moneyPool.validatePoolValue(poolValue);
+        var validationObject = moneyPool.validatePositiveNumber(poolValue);
 
         if (validationObject.isValid === false) { // If invalid pool value exit
             document.getElementById('pool-share-error').innerHTML = validationObject.message;
@@ -210,7 +210,7 @@ var moneyPool = {poolShares: [], hasPools: false, totalPoolShareValue: 0, total:
     }
 
     //Pool input percentage value validation function
-    moneyPool.validatePoolValue = function (poolValue) {
+    moneyPool.validatePositiveNumber = function (poolValue) {
         var errorMsg = '', isValid = false;
         document.getElementById('pool-share-error').innerHTML = '';
 

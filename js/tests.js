@@ -3,7 +3,7 @@ var tests = [];
 (function () {
 
     var divideIntoPools = moneyPool.divideIntoPools;
-    var validateInput = moneyPool.validatePoolValue;
+    var validateInput = moneyPool.validatePositiveNumber;
 
     function equals(arr1, arr2) {
         return arr1.length === arr2.length && arr1.map(function(value, index) {
