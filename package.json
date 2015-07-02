@@ -2,16 +2,16 @@
   "name": "myProject",
   "version": "0.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "divideIntoPools.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tests-runner.js"
   },
   "repository": {
     "type": "git",
-    "url": "git@gitlab.semantico.net:arathi.sreekumar/travelui.git"
+    "url": "https://github.com/arathi-sreekumar/money-pool-challenge.git"
   },
-  "author": "",
-  "license": "BSD-2-Clause",
+  "author": "arathi-sreekumar",
+  "license": "",
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-contrib-jshint": "~0.8.0",
