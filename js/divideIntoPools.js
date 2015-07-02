@@ -41,12 +41,12 @@ var moneyPool = {poolShares: [], hasPools: false, totalPoolShareValue: 0, total:
         var poolValue = parseFloat(document.getElementById('pool-percent').value);
         var validationObject = moneyPool.validatePositiveNumber(poolValue);
 
-        if (validationObject.isValid === false) { // If invalid pool value exit
+        if (validationObject.isValid === false) { // If invalid pool value show error and exit
             document.getElementById('pool-share-error').innerHTML = validationObject.message;
             return;
         }
 
-        if ((poolValue + moneyPool.totalPoolShareValue) > 100) {
+        if ((poolValue + moneyPool.totalPoolShareValue) > 100) { // if total pool share exceeds 100 show error and exit
             document.getElementById('pool-share-error').innerHTML = 'Total pool share cannot exceed 100%, you have ' + (100 - moneyPool.totalPoolShareValue) + '% left';
             return;
         }
