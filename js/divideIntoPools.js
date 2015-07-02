@@ -39,36 +39,40 @@ var moneyPool = {poolShares: [], hasPools: false, totalPoolShareValue: 0, total:
     document.getElementById('create-pool').onclick = function (e) {
         e.preventDefault();
         var poolValue = parseFloat(document.getElementById('pool-percent').value);
+        var validationObject = moneyPool.validatePoolValue(poolValue);
 
-        if (moneyPool.validatePoolValue(poolValue) === true) { //if valid pool value
+        if (validationObject.isValid === false) { // If invalid pool value exit
+            document.getElementById('pool-share-error').innerHTML = validationObject.message;
+            return;
+        }
 
-            //Adding pool value to money pool and updating the total
-            moneyPool.poolShares.push(poolValue);
-            moneyPool.poolSharePercents.push(poolValue/100);
-            moneyPool.totalPoolShareValue += poolValue;
+        //Adding pool value to money pool and updating the total
+        moneyPool.poolShares.push(poolValue);
+        moneyPool.poolSharePercents.push(poolValue/100);
+        moneyPool.totalPoolShareValue += poolValue;
+        document.getElementById('pool-share-error').innerHTML = '';
 
-            //update remaining percentage display
-            document.getElementById('percent-remaining').innerHTML = (100 - moneyPool.totalPoolShareValue);
+        //update remaining percentage display
+        document.getElementById('percent-remaining').innerHTML = (100 - moneyPool.totalPoolShareValue);
 
-            //Show the pool percentage shares listing section
-            document.getElementById('pool-percent').value = '';
-            if (!moneyPool.hasPools) {
-                moneyPool.hasPools = true;
-                showElementByClassName('pool-shares');
-                showElementById('reset-money-pool'); //show reset button if there is an input
-            }
+        //Show the pool percentage shares listing section
+        document.getElementById('pool-percent').value = '';
+        if (!moneyPool.hasPools) {
+            moneyPool.hasPools = true;
+            showElementByClassName('pool-shares');
+            showElementById('reset-money-pool'); //show reset button if there is an input
+        }
 
-            // Add pool to listing section
-            createNewPoolRow(poolValue);
+        // Add pool to listing section
+        createNewPoolRow(poolValue);
 
-            if (moneyPool.totalPoolShareValue === 100) {
-                document.getElementById('percentage-form').className = 'hide'; //hide percentage form
+        if (moneyPool.totalPoolShareValue === 100) {
+            document.getElementById('percentage-form').className = 'hide'; //hide percentage form
 
-                if (moneyPool.total !== 0) {
-                    showElementById('get-pools'); // If all valid inputs are present then show 'show pool' buton
-                } else {
-                    showElementById('total-money-info-msg'); //If total field is missing prompt user
-                }
+            if (moneyPool.total !== 0) {
+                showElementById('get-pools'); // If all valid inputs are present then show 'show pool' buton
+            } else {
+                showElementById('total-money-info-msg'); //If total field is missing prompt user
             }
         }
     };
@@ -102,6 +106,8 @@ var moneyPool = {poolShares: [], hasPools: false, totalPoolShareValue: 0, total:
         document.getElementById('percentage-form').className = ''; //show percentage form
         document.getElementById('total-money').value = ''; //Reset total to empty
         document.getElementById('percent-remaining').innerHTML = '100'; //Reset total pool percent available to 100
+        document.getElementById('pool-share-error').innerHTML = ''; // reset error message of percent
+        hideElementById('total-money-error'); // reset the error message of total amount
 
         //reset all money pool object attributes
         moneyPool.poolShares = [];
@@ -201,22 +207,22 @@ var moneyPool = {poolShares: [], hasPools: false, totalPoolShareValue: 0, total:
     //Pool input percentage value validation function
     moneyPool.validatePoolValue = function (poolValue) {
         var errorMsg = '', isValid = true;
+        document.getElementById('pool-share-error').innerHTML = '';
 
         if (isNaN(poolValue)) {
-            errorMsg = 'Pool has to be a number';
+            errorMsg = 'Pool share value has to be a number';
             isValid = false;
         } else if (poolValue === 0) {
-            errorMsg = 'Pool value cannot be 0';
+            errorMsg = 'Pool share value cannot be 0';
             isValid = false;
         } else if ((poolValue + moneyPool.totalPoolShareValue) > 100) {
             errorMsg = 'Total pool share cannot exceed 100%, you have ' + (100 - moneyPool.totalPoolShareValue) + '% left';
             isValid = false;
         }
-        if (errorMsg !== '') {
-            document.getElementById('pool-share-error').innerHTML = errorMsg;
-        }
-        return isValid;
+        return {isValid: isValid, message: errorMsg};
     };
+
+
 
     moneyPool.divideIntoPools = function(money, percentage) {
 
