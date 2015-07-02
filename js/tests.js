@@ -87,4 +87,39 @@ var tests = [];
         label: 'it should fail when pool total is greater than 100'
     });
 
+    tests.push({
+        expr: function() {
+            return validateInput(undefined);
+        },
+        label: 'is should fail when pool percent input is undefined'
+    });
+
+    tests.push({
+        expr: function() {
+            return validateInput(0);
+        },
+        label: 'is should fail when pool percent input is 0'
+    });
+
+    tests.push({
+        expr: function() {
+            return validateInput(-10);
+        },
+        label: 'is should fail when pool percent input is negative'
+    });
+
+    tests.push({
+        expr: function() {
+            return validateInput('abc');
+        },
+        label: 'is should fail when pool percent input is not a number'
+    });
+
+    tests.push({
+        expr: function() {
+            return validateInput(80);
+        },
+        label: 'is should pass when pool percent input is a number'
+    });
+
 })();
