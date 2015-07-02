@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Money pool</title>
+        <link rel="stylesheet" href="css/main.css" />
+    </head>
+    <body>
+        <div class="header">
+            <div class="container">
+                <h1>Money Pools</h1>
+            </div>
+        </div>
+        <div class="content">
+            <div class="container">
+                <div id="money-pool-input">
+                    <form id="total-money-form" novalidate>
+                        <div class="form-row total-money-row">
+                            <label for="total-money">Total money: &pound;</label>
+                            <input type="text" id="total-money" />
+                        </div>
+                        <div id="total-money-info-msg" class="info hide">You need to add a total amount!</div>
+                    </form>
+
+                    <form id="percentage-form" novalidate>
+                        <div class="form-row pool-percent-row">
+                            <label for="pool-percent">Pool share: </label>
+                            <input type="number" step="0.01" id="pool-percent" placeholder="eg: 50" /> %
+                            <button id="create-pool" class="btn btn-primary">Add pool</button>
+                        </div>
+                        <div id="pool-share-error" class="error"></div>
+                        <div class="percent-remaining-info">You have <span id="percent-remaining">100</span>% remaining.</div>
+                    </form>
+
+                    <div class="pool-shares hide">
+                        <h2>Pool shares: </h2>
+                        <ul id="created-pool-shares"></ul>
+                    </div>
+
+                    <button id="get-pools" class="btn hide">Show money pools</button>
+                </div>
+
+                <div class="money-pool-display hide">
+                    <h2>Money pools: </h2>
+                    <ul id="created-money-pools"></ul>
+                    <p>Total Amount: &pound;<span id="display-total-money"></span></p>
+                    <button id="view-money-pool-input" class="btn">Back</button>
+                </div>
+                <div class="reset-section">
+                    <button id="reset-money-pool" class="btn btn-danger hide">Reset money pool</button>
+                </div>
+            </div>
+        </div>
+        <script src="js/divideIntoPools.js"></script>
+        <script src="js/tests.js"></script>
+        <script src="js/tests-runner.js"></script>
+    </body>
+</html>

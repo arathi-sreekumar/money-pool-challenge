@@ -1,0 +1,113 @@
+.body {
+  background-color: #f5f5dc;
+}
+.container {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+}
+.header .container {
+  background-color: #000000;
+  color: #ffffff;
+}
+.header h1 {
+  margin: 0;
+  padding: 10px 20px;
+}
+.content .container {
+  background-color: #ffffff;
+  color: #222222;
+}
+.form-row {
+  padding: 20px;
+}
+input {
+  height: 40px;
+  line-height: 40px;
+}
+.hide {
+  display: none;
+}
+.error {
+  color: #ff0000;
+}
+.clearfix:before,
+.clearfix:after {
+  content: "";
+  display: table;
+}
+.clearfix:after {
+  clear: both;
+}
+.clearfix {
+  *zoom: 1;
+}
+.btn {
+  padding: 0 30px;
+  height: 40px;
+  line-height: 40px;
+  font-weight: bold;
+  background-color: #000000;
+  color: white;
+  border: 0;
+  font-size: 14px;
+}
+.btn-remove {
+  padding: 6px 8px;
+  background-color: #000000;
+  color: white;
+  font-size: 14px;
+  border: 0;
+  float: right;
+}
+.btn-danger {
+  background-color: #a31515;
+}
+.pool-shares ul {
+  max-width: 400px;
+  padding: 0;
+}
+.pool-shares ul li {
+  background-color: #CCC;
+  margin-bottom: 5px;
+  border: 1px solid #999;
+  list-style: none;
+  padding: 10px 20px;
+}
+.pool-shares ul span {
+  padding: 6px 8px;
+  display: inline-block;
+}
+.money-pool-display ul {
+  max-width: 600px;
+  padding: 0;
+}
+.money-pool-display li {
+  list-style: none;
+  padding: 20px 10px;
+  background-color: #f5f5dc;
+  border: 1px solid #cacab1;
+}
+.money-pool-display li span {
+  display: inline-block;
+}
+.share-money,
+.share-percent {
+  padding-right: 20px;
+  width: 20%;
+}
+.share-display {
+  width: 50%;
+}
+.share-display .bar {
+  background-color: #a52a2a;
+  height: 5px;
+}
+.percent-remaining-info,
+.info {
+  color: green;
+  padding: 5px 20px;
+}
+.reset-section {
+  padding: 20px 0;
+}
