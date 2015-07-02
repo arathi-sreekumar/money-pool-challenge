@@ -24,7 +24,7 @@ var moneyPool = {poolShares: [], hasPools: false, totalPoolShareValue: 0, total:
     document.getElementById('create-pool').onclick = function (e) {
         e.preventDefault();
         var poolValue = parseFloat(document.getElementById('pool-percent').value);
-        if (validatePoolValue(poolValue) === true) {
+        if (moneyPool.validatePoolValue(poolValue) === true) {
             moneyPool.poolShares.push(poolValue);
             moneyPool.poolSharePercents.push(poolValue/100);
             moneyPool.totalPoolShareValue += poolValue;
@@ -179,7 +179,7 @@ var moneyPool = {poolShares: [], hasPools: false, totalPoolShareValue: 0, total:
             document.getElementById('pool-share-error').innerHTML = errorMsg;
         }
         return isValid;
-    }
+    };
 
     moneyPool.divideIntoPools = function(money, percentage) {
 
