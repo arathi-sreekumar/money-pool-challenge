@@ -46,6 +46,11 @@ var moneyPool = {poolShares: [], hasPools: false, totalPoolShareValue: 0, total:
             return;
         }
 
+        if ((poolValue + moneyPool.totalPoolShareValue) > 100) {
+            document.getElementById('pool-share-error').innerHTML = 'Total pool share cannot exceed 100%, you have ' + (100 - moneyPool.totalPoolShareValue) + '% left';
+            return;
+        }
+
         //Adding pool value to money pool and updating the total
         moneyPool.poolShares.push(poolValue);
         moneyPool.poolSharePercents.push(poolValue/100);
@@ -206,18 +211,17 @@ var moneyPool = {poolShares: [], hasPools: false, totalPoolShareValue: 0, total:
 
     //Pool input percentage value validation function
     moneyPool.validatePoolValue = function (poolValue) {
-        var errorMsg = '', isValid = true;
+        var errorMsg = '', isValid = false;
         document.getElementById('pool-share-error').innerHTML = '';
 
         if (isNaN(poolValue)) {
             errorMsg = 'Pool share value has to be a number';
-            isValid = false;
         } else if (poolValue === 0) {
             errorMsg = 'Pool share value cannot be 0';
-            isValid = false;
-        } else if ((poolValue + moneyPool.totalPoolShareValue) > 100) {
-            errorMsg = 'Total pool share cannot exceed 100%, you have ' + (100 - moneyPool.totalPoolShareValue) + '% left';
-            isValid = false;
+        } else if (poolValue < 0) {
+            errorMsg = 'Pool share value cannot be negative';
+        } else {
+            isValid = true;
         }
         return {isValid: isValid, message: errorMsg};
     };
