@@ -107,7 +107,8 @@ var moneyPool = {poolShares: [], hasPools: false, totalPoolShareValue: 0, total:
         var removeButton = document.createElement('BUTTON');
         removeButton.className = 'remove-share btn-remove';
         removeButton.setAttribute('data-share', poolValue);
-        removeButton.innerHTML = 'Remove';
+        removeButton.setAttribute('title', 'Remove');
+        removeButton.innerHTML = 'X';
         removeButton.addEventListener('click', removeShareHandler, false);
         newShareElement.appendChild(removeButton);
 
