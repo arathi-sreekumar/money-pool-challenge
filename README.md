@@ -1,3 +1,5 @@
+Money pool challenge
+
 Implement function divideIntoPools that will divide money into percentage pools, for example:
 
     //splitting 100 into 2 equal pools.
